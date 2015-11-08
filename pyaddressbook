@@ -1,0 +1,35 @@
+#!/usr/bin/env python2
+
+import addressbook.sync
+import argparse
+import sys
+import os
+import glib
+import logging
+
+
+def ensure_dir(path):
+  try:
+    os.makedirs(path)
+  except OSError:
+    if not os.path.isdir(path):
+        raise
+
+
+def main():
+  # Import only here the GTK stuff, otherwise there would be a gtk warning if syncing without an X-Server
+  from addressbook.addressbook import Addressbook
+  import gtk
+  a = Addressbook( os.path.join(glib.get_user_config_dir(), 'pyaddressbook', 'addressbook.db') )
+  gtk.main()
+
+if __name__ == '__main__':
+    logging.captureWarnings(True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--synconly', action='store_true', help='Sync only with the CardDAV server and exit afterwards')
+    args = parser.parse_args()
+    ensure_dir(os.path.join(glib.get_user_config_dir(), 'pyaddressbook'))
+    if args.synconly:
+        addressbook.sync.full_sync()
+        sys.exit()
+    main()

@@ -1,0 +1,10 @@
+To install this application just run:
+  python setup.py install
+
+Or if you do not want to install it in the standard directory, run:
+  python setup.py install --prefix=MY_PREFIX
+
+As soon as the installation succeeded, you can start the application with 'pyaddressbook'.
+
+If you just want to try the application without installing it, you can run:
+  python ./pyaddressbook
