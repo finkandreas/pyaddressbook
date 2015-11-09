@@ -378,7 +378,6 @@ class Addressbook(gtk.Window):
       self.model.remove(iter)
 
 
-
   def vcard_updated(self, href, vcard):
     if href in self.key_from_href:
       (key,iter) = self.key_from_href[href]

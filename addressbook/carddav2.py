@@ -29,6 +29,7 @@ import requests
 import urlparse
 import logging
 import lxml.etree as ET
+import urllib
 
 
 def get_random_href():
@@ -299,6 +300,7 @@ class PyCardDAV(object):
                 insert = False
                 for refprop in response.iterchildren():
                     if (refprop.tag == namespace + "href"):
+                        #href = urllib.unquote(urllib.unquote(refprop.text))
                         href = refprop.text
                     for prop in refprop.iterchildren():
                         for props in prop.iterchildren():

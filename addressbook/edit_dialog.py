@@ -59,7 +59,11 @@ class EditDialog(gtk.Dialog):
     d = parse(self.builder.get_object('birthday_entry').get_text(), default=datetime(1, 2, 3), dayfirst=True )
     if d != datetime(1, 2, 3):
       self.vcard.add('bday').value = '%04d%02d%02d' % (d.year, d.month, d.day)
-      if hasattr(self.vcard, 'label'): del self.vcard.label # This is an ugly hack, but it is useful since android shows the label instead of the updated address
+    #ugly hack to remove the label from the address field
+    if hasattr(self.vcard, 'label'): del self.vcard.label # This is an ugly hack, but it is useful since android shows the label instead of the updated address
+    if hasattr(self.vcard, 'adr_list'):
+      for adr in self.vcard.adr_list:
+        if hasattr(adr, "label_paramlist"): del adr.label_paramlist
     return self.vcard
 
 
