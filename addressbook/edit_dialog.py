@@ -2,6 +2,7 @@ import gtk
 import gobject
 from dateutil.parser import parse
 from datetime import datetime
+from datetime import date
 from misc import *
 
 class EditDialog(gtk.Dialog):
@@ -123,12 +124,14 @@ class EditDialog(gtk.Dialog):
 
 
   def show_birthday_calendar(self, button):
-    date = parse(self.builder.get_object('birthday_entry').get_text(), dayfirst=True)
+    d = date.today()
+    if self.builder.get_object('birthday_entry').get_text() != "":
+      d = parse(self.builder.get_object('birthday_entry').get_text(), dayfirst=True)
     dialog = gtk.Dialog("Choose birthday...", self, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
                        (gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT, gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
     calendar = gtk.Calendar()
-    calendar.select_month(date.month-1, date.year)
-    calendar.select_day(date.day)
+    calendar.select_month(d.month-1, d.year)
+    calendar.select_day(d.day)
     calendar.show()
     dialog.vbox.pack_start(calendar)
     dialog.set_position( gtk.WIN_POS_MOUSE )
