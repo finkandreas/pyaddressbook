@@ -57,7 +57,7 @@ class EditDialog(gtk.Dialog):
     self.vcard.fn.value = self.builder.get_object('formatted_name_entry').get_text()
     if hasattr(self.vcard, 'bday'):
       del self.vcard.bday
-    d = parse(self.builder.get_object('birthday_entry').get_text(), default=datetime(1, 2, 3), dayfirst=True )
+    d = parse(self.builder.get_object('birthday_entry').get_text() or "03.02.0001", default=datetime(1, 2, 3), dayfirst=True )
     if d != datetime(1, 2, 3):
       self.vcard.add('bday').value = '%04d-%02d-%02d' % (d.year, d.month, d.day)
     #ugly hack to remove the label from the address field
