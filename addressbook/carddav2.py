@@ -78,6 +78,10 @@ class PyCardDAV(object):
         urllog = logging.getLogger('urllib3.connectionpool')
         urllog.setLevel(logging.CRITICAL)
 
+        # if this is a forwarding URL we have to exchange the URL
+        response = requests.get(resource)
+        resource = response.url
+
         split_url = urlparse.urlparse(resource)
         url_tuple = namedtuple('url', 'resource base path')
         self.url = url_tuple(resource,
